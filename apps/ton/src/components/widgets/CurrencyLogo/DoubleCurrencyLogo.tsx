@@ -33,9 +33,13 @@ export function DoubleCurrencyLogo({
     <>
       <Wrapper margin={margin}>
         {currency0 && (
-          <CurrencyLogo currency={currency0} size={`${size.toString()}px`} style={{ marginRight: innerMargin }} />
+          <CurrencyLogo
+            currency={currency0 as any}
+            size={`${size.toString()}px`}
+            style={{ marginRight: innerMargin }}
+          />
         )}
-        {currency1 && <CurrencyLogo currency={currency1} size={`${size.toString()}px`} />}
+        {currency1 && <CurrencyLogo currency={currency1 as any} size={`${size.toString()}px`} />}
         {showChainLogo && currency0 ? (
           <img
             alt={`chain-${currency0.chainId}`}
