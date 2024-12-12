@@ -1,6 +1,7 @@
 import { useTranslation } from '@pancakeswap/localization'
 import { AddIcon, Box, BoxProps, Button, FlexGap, Text } from '@pancakeswap/uikit'
 import { WalletDisclaimer } from 'components/Card/WalletDisclaimer'
+import Link from 'next/link'
 import styled from 'styled-components'
 import { LiquidityList } from './LiquidityList'
 
@@ -41,9 +42,11 @@ export const CardContent = (props: CardContentProps) => {
 
       {isWalletConnected && (
         <StyledCardFooter>
-          <Button width="100%" endIcon={<AddIcon color="white" />}>
-            Add Liquidity
-          </Button>
+          <Link href="/liquidity/add">
+            <Button width="100%" endIcon={<AddIcon color="white" />}>
+              Add Liquidity
+            </Button>
+          </Link>
         </StyledCardFooter>
       )}
     </>

@@ -1,9 +1,9 @@
 import { Box, Flex } from '@pancakeswap/uikit'
 import { Header } from 'components/Header'
 
-import { StyledSwapContainer } from 'components/styles'
 import { V4SwapForm } from 'components/TonSwap/SwapSimplify/V4Swap'
 import styled from 'styled-components'
+import { StyledSwapContainer } from 'styles/swapStyles'
 import Page from 'views/Page'
 import { Footer } from './Footer'
 
