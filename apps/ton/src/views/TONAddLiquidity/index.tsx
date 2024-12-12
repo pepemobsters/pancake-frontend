@@ -2,9 +2,9 @@ import { Box, Flex } from '@pancakeswap/uikit'
 import { Header } from 'components/Header'
 import { CardContainer } from 'styles/cardStyles'
 import Page from 'views/Page'
-import { LiquidityCard } from './LiquidityCard'
+import { AddLiquidityCard } from './AddLiquidityCard'
 
-export const TONLiquidity = () => {
+export const TONAddLiquidity = () => {
   return (
     <Page removePadding>
       <Box width="100%">
@@ -13,7 +13,7 @@ export const TONLiquidity = () => {
       <Flex width="100%" height="100%" justifyContent="center" position="relative">
         <Flex flexDirection="column" alignItems="center" height="100%" width="100%">
           <CardContainer>
-            <LiquidityCard />
+            <AddLiquidityCard />
           </CardContainer>
         </Flex>
       </Flex>
