@@ -2,6 +2,7 @@ export type TonFunctionDef = {
   method: string
   inputs: readonly TonInputDef[] // Changed to readonly array
   outputs: readonly { type: string }[] // Changed to readonly array
+  defaultValue?: any
 }
 
 export type TonInputType = 'address' | 'int'
