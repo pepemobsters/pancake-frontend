@@ -2,7 +2,6 @@ import { LanguageProvider } from '@pancakeswap/localization'
 import { dark, light, ResetCSS, UIKitProvider } from '@pancakeswap/uikit'
 import { HydrationBoundary, QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import useThemeCookie from 'hooks/useThemeCookie'
-import { Provider as JotaiProvider } from 'jotai'
 import { ThemeProvider as NextThemeProvider, useTheme as useNextTheme } from 'next-themes'
 import { PropsWithChildren } from 'react'
 import GlobalStyle from 'styles/GlobalStyle'
@@ -33,16 +32,14 @@ export const Providers = ({ children, dehydratedState }: ProvidersProps) => {
     <>
       <QueryClientProvider client={queryClient}>
         <HydrationBoundary state={dehydratedState}>
-          <JotaiProvider>
-            <NextThemeProvider>
-              <StyledUIKitProvider>
-                <GlobalHooks />
-                <ResetCSS />
-                <GlobalStyle />
-                <LanguageProvider>{children}</LanguageProvider>
-              </StyledUIKitProvider>
-            </NextThemeProvider>
-          </JotaiProvider>
+          <NextThemeProvider>
+            <StyledUIKitProvider>
+              <GlobalHooks />
+              <ResetCSS />
+              <GlobalStyle />
+              <LanguageProvider>{children}</LanguageProvider>
+            </StyledUIKitProvider>
+          </NextThemeProvider>
         </HydrationBoundary>
       </QueryClientProvider>
     </>
