@@ -11,4 +11,7 @@ export const ContractClasses = {
   [TonContractTypes.PCSRouter]: {
     interfaces: [],
   },
+  [TonContractTypes.NATIVE]: {
+    interfaces: [getBalance],
+  },
 } as const
