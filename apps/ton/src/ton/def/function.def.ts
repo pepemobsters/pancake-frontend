@@ -23,4 +23,5 @@ export const getBalance = {
       type: 'int',
     },
   ],
+  defaultValue: 0n,
 } as const satisfies TonFunctionDef

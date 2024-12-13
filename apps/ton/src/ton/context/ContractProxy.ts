@@ -70,25 +70,40 @@ export class ContractProxy {
   }
 
   private async callReadFunction(fn: TonFunctionDef, ...args: any[]) {
+    const client = TonContext.instance.getClient()
+    logger.debug('contract address:', this.address, `https://testnet.tonscan.org/address/${this.address}`)
+    const contract = Address.parse(this.address)
+    const methodName = snakeCase(fn.method)
     try {
-      const client = TonContext.instance.getClient()
-      logger.debug('contract address:', this.address, `https://testnet.tonscan.org/address/${this.address}`)
-      const contract = Address.parse(this.address)
-      const methodName = snakeCase(fn.method)
       logger.debug('--call function--', methodName, 'with params', args)
       const params = ContractProxy.getParams(fn, args)
       const result = await client.runMethod(contract, methodName, params)
-      const resolvedResult = recoverResults(fn, result.stack)
+      const resolvedResult = restoreResults(fn, result.stack)
       logger.debug('result', resolvedResult)
       return resolvedResult
     } catch (ex) {
+      if (typeof fn.defaultValue !== 'undefined') {
+        return fn.defaultValue
+      }
       console.error(`Error when calling ${fn.method} with args ${args}`)
       throw ex
     }
   }
+
+  public async getContractState() {
+    const client = TonContext.instance.getClient()
+    const contract = Address.parse(this.address)
+    const state = await client.getContractState(contract)
+    return state
+  }
+
+  public async isContractInitialized(): Promise<boolean> {
+    const state = await this.getContractState()
+    return state.code !== null && state.balance !== null
+  }
 }
 
-function recoverResults(fn: TonFunctionDef, stack: TupleReader): any[] {
+function restoreResults(fn: TonFunctionDef, stack: TupleReader): any[] {
   const res: any[] = []
   for (let i = 0; i < fn.outputs.length; i++) {
     const output = fn.outputs[i]
