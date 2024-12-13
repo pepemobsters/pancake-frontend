@@ -13,7 +13,7 @@ export const getWalletAddress = {
       type: 'address',
     },
   ],
-} as const satisfies TonFunctionDef
+} as const satisfies TonFunctionDef<never>
 
 export const getBalance = {
   method: 'getBalance',
@@ -23,5 +23,5 @@ export const getBalance = {
       type: 'int',
     },
   ],
-  defaultValue: 0n,
-} as const satisfies TonFunctionDef
+  defaultValue: null,
+} as const satisfies TonFunctionDef<null>

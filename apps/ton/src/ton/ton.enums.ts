@@ -9,12 +9,14 @@ export enum TonContextEvents {
 }
 
 export enum TonContractTypes {
+  NATIVE,
   JettonMinter,
   Jetton,
   PCSRouter,
 }
 
 export enum TonContractNames {
+  NATIVE,
   USDC,
   CAKE,
   PCSRouter,

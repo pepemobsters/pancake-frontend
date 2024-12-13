@@ -1,8 +1,8 @@
-export type TonFunctionDef = {
+export type TonFunctionDef<TDef> = {
   method: string
   inputs: readonly TonInputDef[] // Changed to readonly array
   outputs: readonly { type: string }[] // Changed to readonly array
-  defaultValue?: any
+  defaultValue?: TDef
 }
 
 export type TonInputType = 'address' | 'int'
@@ -47,14 +47,19 @@ type OutputWrapper<T extends readonly unknown[]> = T extends readonly [infer Fir
   ? void
   : T
 
-export type FunctionDef<T extends TonFunctionDef> = (
+export type FunctionDef<TDefault, T extends TonFunctionDef<TDefault>> = (
   ...args: InputTypes<T['inputs']>
-) => OutputWrapper<OutputTypes<T['outputs']>>
+) => 'defaultValue' extends keyof T
+  ? OutputWrapper<OutputTypes<T['outputs']>> | TDefault
+  : OutputWrapper<OutputTypes<T['outputs']>>
 
-export interface TonContractClassDef {
-  interfaces: readonly TonFunctionDef[]
+export interface TonContractClassDef<TDefault> {
+  interfaces: readonly TonFunctionDef<TDefault>[]
 }
 
-export type TonContractInstance<TDef extends TonContractClassDef> = {
-  [K in TDef['interfaces'][number] as K['method']]: FunctionDef<K>
+export type TonContractInstance<TDef extends TonContractClassDef<any>> = {
+  [K in TDef['interfaces'][number] as K['method']]: FunctionDef<
+    K['defaultValue'] extends undefined ? unknown : K['defaultValue'],
+    K
+  >
 }

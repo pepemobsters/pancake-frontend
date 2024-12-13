@@ -1,6 +1,10 @@
 import { TonContractNames, TonContractTypes } from 'ton/ton.enums'
 
 export const Contracts = {
+  [TonContractNames.NATIVE]: {
+    address: '',
+    type: TonContractTypes.NATIVE,
+  },
   [TonContractNames.USDC]: {
     address: 'kQA8oT-HRBY-9-yFymg17hD5FE07--Z1gYc_sZTbzqpOZr1t',
     type: TonContractTypes.JettonMinter,

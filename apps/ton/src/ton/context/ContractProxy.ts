@@ -8,12 +8,12 @@ import { TonContext } from './TonContext'
 
 const logger = Logger.getLogger('ContractProxy')
 export class ContractProxy {
-  constructor(private type: TonContractTypes, private address: string) {}
+  constructor(private type: TonContractTypes, private address: string, private walletAddress = '') {}
 
-  private findFuncDef(name: string): TonFunctionDef | undefined {
+  private findFuncDef(name: string): TonFunctionDef<any> | undefined {
     const contractDef = ContractClasses[this.type]
     const interfaces = contractDef.interfaces
-    return interfaces.find((x: TonFunctionDef) => x.method === name)
+    return interfaces.find((x: TonFunctionDef<any>) => x.method === name)
   }
 
   get(_: any, prop: string) {
@@ -36,7 +36,7 @@ export class ContractProxy {
     return call
   }
 
-  private static getParams(fn: TonFunctionDef, args: any[]): TupleItem[] {
+  private static getParams(fn: TonFunctionDef<any>, args: any[]): TupleItem[] {
     const params: TupleItem[] = []
 
     try {
@@ -69,12 +69,27 @@ export class ContractProxy {
     }
   }
 
-  private async callReadFunction(fn: TonFunctionDef, ...args: any[]) {
+  private async getTonBalance() {
+    const client = TonContext.instance.getClient()
+    if (!this.walletAddress) {
+      return null
+    }
+    const balance = await client.getBalance(Address.parse(this.walletAddress))
+    return balance
+  }
+
+  private async callReadFunction(fn: TonFunctionDef<any>, ...args: any[]) {
     const client = TonContext.instance.getClient()
     logger.debug('contract address:', this.address, `https://testnet.tonscan.org/address/${this.address}`)
-    const contract = Address.parse(this.address)
-    const methodName = snakeCase(fn.method)
+
     try {
+      if (this.type === TonContractTypes.NATIVE) {
+        if (fn.method === 'getBalance') {
+          return await this.getTonBalance()
+        }
+      }
+      const contract = Address.parse(this.address)
+      const methodName = snakeCase(fn.method)
       logger.debug('--call function--', methodName, 'with params', args)
       const params = ContractProxy.getParams(fn, args)
       const result = await client.runMethod(contract, methodName, params)
@@ -103,7 +118,7 @@ export class ContractProxy {
   }
 }
 
-function restoreResults(fn: TonFunctionDef, stack: TupleReader): any[] {
+function restoreResults(fn: TonFunctionDef<any>, stack: TupleReader): any[] {
   const res: any[] = []
   for (let i = 0; i < fn.outputs.length; i++) {
     const output = fn.outputs[i]
