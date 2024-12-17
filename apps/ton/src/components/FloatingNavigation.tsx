@@ -1,5 +1,6 @@
 import { useTranslation } from '@pancakeswap/localization'
-import { Box, Link, SortArrowIcon, Text } from '@pancakeswap/uikit'
+import { Box, SortArrowIcon, Text } from '@pancakeswap/uikit'
+import Link from 'next/link'
 import styled from 'styled-components'
 
 const FloatingBox = styled(Box)`

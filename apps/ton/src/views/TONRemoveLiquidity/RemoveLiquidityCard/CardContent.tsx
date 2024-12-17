@@ -81,19 +81,19 @@ export const CardContent = (props: CardContentProps) => {
         <LightGreyCard mt="8px">
           <FlexGap flexDirection="column" gap="8px">
             <Flex justifyContent="space-between">
-              <Text>Pooled {currency0}</Text>
+              <Text color="textSubtle">Pooled {currency0}</Text>
               <Text>5</Text>
             </Flex>
             <Flex justifyContent="space-between">
-              <Text>Pooled {currency1}</Text>
+              <Text color="textSubtle">Pooled {currency1}</Text>
               <Text>10</Text>
             </Flex>
             <Flex justifyContent="space-between">
-              <Text>{currency0} fee earned</Text>
+              <Text color="textSubtle">{currency0} fee earned</Text>
               <Text>0.1</Text>
             </Flex>
             <Flex justifyContent="space-between">
-              <Text>{currency1} fee earned</Text>
+              <Text color="textSubtle">{currency1} fee earned</Text>
               <Text>0.2</Text>
             </Flex>
           </FlexGap>
