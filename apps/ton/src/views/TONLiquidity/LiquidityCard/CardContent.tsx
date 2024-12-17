@@ -6,7 +6,6 @@ import styled from 'styled-components'
 import { LiquidityList } from './LiquidityList'
 
 const ContentContainer = styled(Box)<{ $isBottomRounded?: boolean }>`
-  padding: 24px;
   background-color: ${({ theme }) => theme.colors.background};
   border-radius: ${({ theme, $isBottomRounded }) =>
     $isBottomRounded ? `0 0 ${theme.radii.card} ${theme.radii.card}` : '0'};
@@ -27,10 +26,10 @@ export const CardContent = (props: CardContentProps) => {
   return (
     <>
       <ContentContainer $isBottomRounded={!isWalletConnected} {...props}>
-        {!isWalletConnected && <WalletDisclaimer my="8px" text={t('Connect wallet to view your liquidity')} />}
+        {!isWalletConnected && <WalletDisclaimer p="24px" my="8px" text={t('Connect wallet to view your liquidity')} />}
 
         {isWalletConnected && liquidityLength === 0 && (
-          <FlexGap flexDirection="column" alignItems="center" gap="16px" my="8px">
+          <FlexGap flexDirection="column" alignItems="center" gap="16px" my="8px" p="24px">
             <img src="/images/green-box.png" alt="Empty Box" width={96} />
 
             <Text color="textSubtle">{t('No liquidity found')}</Text>

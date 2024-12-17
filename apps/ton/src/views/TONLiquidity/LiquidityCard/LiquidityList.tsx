@@ -6,6 +6,7 @@ const ScrollableList = styled(FlexGap).attrs({ flexDirection: 'column', gap: '8p
   overflow-y: auto;
   max-height: 300px;
   min-height: 20px;
+  padding: 16px;
 `
 
 interface LiquidityListProps extends BoxProps {}
