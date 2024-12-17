@@ -2,6 +2,7 @@ import { useTranslation } from '@pancakeswap/localization'
 import { AddIcon, Box, Button, Flex, FlexGap, MinusIcon, Text } from '@pancakeswap/uikit'
 import { LightCard } from 'components/Card'
 import { Collapse } from 'components/widgets/swap-v2/Collapse'
+import Link from 'next/link'
 import { useCallback, useState } from 'react'
 import styled from 'styled-components'
 
@@ -55,8 +56,12 @@ export const LiquidityRow = ({ title, currency0, currency1 }: LiquidityRowProps)
                 <Text>0.0124%</Text>
               </Flex>
               <FlexGap mt="10px" justifyContent="space-between" gap="16px">
-                <StyledButton endIcon={<AddIcon color="primary60" />}>{t('Add')}</StyledButton>
-                <StyledButton endIcon={<MinusIcon color="primary60" />}>{t('Remove')}</StyledButton>
+                <Link href={`/liquidity/add/${currency0}/${currency1}`} style={{ width: '100%' }}>
+                  <StyledButton endIcon={<AddIcon color="primary60" />}>{t('Add')}</StyledButton>
+                </Link>
+                <Link href={`/liquidity/remove/${currency0}/${currency1}`} style={{ width: '100%' }}>
+                  <StyledButton endIcon={<MinusIcon color="primary60" />}>{t('Remove')}</StyledButton>
+                </Link>
               </FlexGap>
             </Box>
           }

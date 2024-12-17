@@ -2,6 +2,7 @@ import { useTranslation } from '@pancakeswap/localization'
 import { AddIcon, Box, BoxProps, Button, Flex, FlexGap, Text } from '@pancakeswap/uikit'
 import { WalletDisclaimer } from 'components/Card/WalletDisclaimer'
 import { SwapUIV2 } from 'components/widgets'
+import { useRouter } from 'next/router'
 import { useCallback, useState } from 'react'
 import styled from 'styled-components'
 
@@ -22,6 +23,10 @@ interface CardContentProps extends BoxProps {}
 export const CardContent = (props: CardContentProps) => {
   const { t } = useTranslation()
   const isWalletConnected = true
+
+  // Query params
+  const router = useRouter()
+  const [currency0, currency1] = router.query?.currency ?? ['TON', 'USDT']
 
   const [inputValue, setInputValue] = useState('') // TODO: Set in atoms later
   const [outputValue, setOutputValue] = useState('') // TODO: Set in atoms later
@@ -44,27 +49,27 @@ export const CardContent = (props: CardContentProps) => {
     <>
       <ContentContainer $isBottomRounded={!isWalletConnected} {...props}>
         {!isWalletConnected && <WalletDisclaimer my="8px" text={t('Connect wallet to add liquidity')} />}
-
         <SwapUIV2.CurrencyInputPanelSimplify
           id="add-liquidity-input-panel"
           onUserInput={handleInputValue}
           value={inputValue}
         />
-
         <AddIcon mt="12px" width={28} />
-
         <SwapUIV2.CurrencyInputPanelSimplify
           id="add-liquidity-output-panel"
           onUserInput={handleOutputValue}
           value={outputValue}
         />
-
         <FlexGap flexDirection="column" mt="24px" gap="16px">
           <Flex justifyContent="space-between">
             <Text color="textSubtle">Rates</Text>
             <Box>
-              <Text>1 TON ≈ 5.21 USDT</Text>
-              <Text>1 USDT ≈ 0.927 TON</Text>
+              <Text>
+                1 {currency0} ≈ 5.21 {currency1}
+              </Text>
+              <Text>
+                1 {currency1} ≈ 0.927 {currency0}
+              </Text>
             </Box>
           </Flex>
           <Flex justifyContent="space-between">

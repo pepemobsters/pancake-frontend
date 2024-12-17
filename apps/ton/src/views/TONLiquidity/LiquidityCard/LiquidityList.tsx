@@ -17,17 +17,17 @@ export const LiquidityList = (props: LiquidityListProps) => {
       currency1: 'USDT',
     },
     {
-      title: 'TON-BNB LP',
+      title: 'TON-CAKE LP',
       currency0: 'TON',
       currency1: 'BNB',
     },
     {
-      title: 'TON-BUSD LP',
+      title: 'TON-USDC LP',
       currency0: 'TON',
       currency1: 'BUSD',
     },
     {
-      title: 'TON-ETH LP',
+      title: 'TON-WBTC LP',
       currency0: 'TON',
       currency1: 'ETH',
     },
