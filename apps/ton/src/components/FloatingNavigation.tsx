@@ -37,6 +37,7 @@ const StyledLink = styled(Link)`
 
 export const FloatingNavigation = () => {
   const { t } = useTranslation()
+
   return (
     <>
       <FloatingBox>
