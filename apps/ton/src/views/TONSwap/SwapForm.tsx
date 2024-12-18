@@ -1,12 +1,15 @@
-import { Button, Column, Text, useModalV2 } from '@pancakeswap/uikit'
+import { Button, Column, Text } from '@pancakeswap/uikit'
 import { ButtonAndDetailsPanel } from 'components/TonSwap/ButtonAndDetailsPanel'
 import CurrencyInputPanelSimplify from 'components/TonSwap/CurrencyInputPanelSimplify'
 import { FlipButton } from 'components/TonSwap/FlipButton'
 import { useCallback, useState } from 'react'
 
 import { useTranslation } from '@pancakeswap/localization'
+import { appModalAtom } from 'atoms/appModalAtom'
+import { ApproveModal } from 'components/Modals/ApproveModal'
 import { ConfirmSwapModal } from 'components/TonSwap/ConfirmSwapModal'
 import { SwapUIV2 } from 'components/widgets/swap-v2'
+import { useSetAtom } from 'jotai'
 
 export const SwapForm = () => {
   const noop = () => {}
@@ -19,7 +22,9 @@ export const SwapForm = () => {
   const [outputValue, setOutputValue] = useState('')
   const [isUserInsufficientBalance, setIsUserInsufficientBalance] = useState(false)
 
-  const { isOpen, setIsOpen, onDismiss } = useModalV2()
+  // const [onPresentConfirmModal] = useModal(<ConfirmSwapModal />, true, true, 'confirm-swap-modal')
+
+  const setOpen = useSetAtom(appModalAtom)
 
   const handleTypeInput = useCallback(
     (value: string) => {
@@ -28,9 +33,60 @@ export const SwapForm = () => {
     [setTypedValue],
   )
 
+  // const handleSwapTwo = useCallback(() => {
+  //   setOpen((prev) => ({
+  //     ...prev,
+  //     isOpen: true,
+  //     title: (
+  //       <Text fontSize="20px" width="100%" textAlign="center" bold>
+  //         {t('Transaction Submitted')}
+  //       </Text>
+  //     ),
+  //     content: (
+  //       <ActionModal
+  //         type="TransactionSubmitted"
+  //         currency0="TON"
+  //         currency1="USDT"
+  //         amount0="100"
+  //         amount1="1000"
+  //         hash="0x00"
+  //       />
+  //     ),
+  //   }))
+  // }, [t, setOpen])
+  // const handleSwapTwo = useCallback(() => {
+  //   setOpen((prev) => ({
+  //     ...prev,
+  //     isOpen: true,
+  //     title: (
+  //       <Text fontSize="20px" width="100%" textAlign="center" bold>
+  //         {t('Confirm transaction')}
+  //       </Text>
+  //     ),
+  //     content: <ConfirmActionModal currency0="TON" currency1="USDT" amount0="100" amount1="1000" />,
+  //   }))
+  // }, [t, setOpen])
+  const handleSwapTwo = useCallback(() => {
+    setOpen((prev) => ({
+      ...prev,
+      isOpen: true,
+      title: (
+        <Text fontSize="20px" width="100%" textAlign="center" bold>
+          {t('Approve %token%', { token: 'TON' })}
+        </Text>
+      ),
+      content: <ApproveModal currency="TON" amount="1000" />,
+    }))
+  }, [t, setOpen])
+
   const handleSwap = useCallback(() => {
-    setIsOpen(true)
-  }, [setIsOpen])
+    setOpen((prev) => ({
+      ...prev,
+      isOpen: true,
+      title: t('Confirm Swap'),
+      content: <ConfirmSwapModal onDismiss={() => handleSwapTwo()} />,
+    }))
+  }, [t, setOpen, handleSwapTwo])
 
   return (
     <SwapUIV2.SwapFormWrapper>
@@ -95,7 +151,6 @@ export const SwapForm = () => {
         </SwapUIV2.InputPanelWrapper>
       </SwapUIV2.SwapTabAndInputPanelWrapper>
       <ButtonAndDetailsPanel swapCommitButton={<Button onClick={handleSwap}>Swap</Button>} />
-      <ConfirmSwapModal isOpen={isOpen} onDismiss={onDismiss} />
     </SwapUIV2.SwapFormWrapper>
   )
 }

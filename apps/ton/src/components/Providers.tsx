@@ -1,10 +1,11 @@
 import { LanguageProvider } from '@pancakeswap/localization'
-import { dark, light, ResetCSS, UIKitProvider } from '@pancakeswap/uikit'
+import { dark, light, ModalProvider, ResetCSS, UIKitProvider } from '@pancakeswap/uikit'
 import { HydrationBoundary, QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import useThemeCookie from 'hooks/useThemeCookie'
 import { ThemeProvider as NextThemeProvider, useTheme as useNextTheme } from 'next-themes'
 import { PropsWithChildren } from 'react'
 import GlobalStyle from 'styles/GlobalStyle'
+import { AppModal } from './AppModal'
 
 const queryClient = new QueryClient()
 
@@ -37,7 +38,12 @@ export const Providers = ({ children, dehydratedState }: ProvidersProps) => {
               <GlobalHooks />
               <ResetCSS />
               <GlobalStyle />
-              <LanguageProvider>{children}</LanguageProvider>
+              <LanguageProvider>
+                <ModalProvider>
+                  {children}
+                  <AppModal />
+                </ModalProvider>
+              </LanguageProvider>
             </StyledUIKitProvider>
           </NextThemeProvider>
         </HydrationBoundary>
