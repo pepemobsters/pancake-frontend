@@ -1,4 +1,3 @@
-import { useMatchBreakpoints } from '@pancakeswap/uikit'
 import { useMemo } from 'react'
 import { AdCakeStaking } from './Ads/AdCakeStaking'
 import { AdMevProtection } from './Ads/AdMevProtection'
@@ -19,10 +18,10 @@ enum Priority {
   VERY_LOW = 1,
 }
 
+const MAX_ADS = 6
+
 export const useAdConfig = () => {
-  const { isDesktop } = useMatchBreakpoints()
   const shouldRenderOnPage = shouldRenderOnPages(['/buy-crypto', '/', '/prediction'])
-  const MAX_ADS = isDesktop ? 6 : 4
 
   const adList: Array<{
     id: string
@@ -76,7 +75,7 @@ export const useAdConfig = () => {
         .filter((ad) => ad.shouldRender === undefined || ad.shouldRender.every(Boolean))
         .sort((a, b) => (b.priority || Priority.VERY_LOW) - (a.priority || Priority.VERY_LOW))
         .slice(0, MAX_ADS),
-    [adList, MAX_ADS],
+    [adList],
   )
 }
 
