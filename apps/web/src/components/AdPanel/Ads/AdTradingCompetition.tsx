@@ -15,7 +15,7 @@ export const AdTradingCompetition = (props: AdPlayerProps & { token: 'aitech' | 
   return (
     <AdCard imageUrl={getImageUrl(tradingCompetitionConfig[token].imgUrl)} {...rest}>
       <BodyText mb="0">
-        {t('Swap %token% to win a share of', { token: token.toUpperCase() })}${tradingCompetitionConfig[token].reward}
+        {t('Swap %token% to win a share of', { token: token.toUpperCase() })} ${tradingCompetitionConfig[token].reward}
         <Link fontSize="inherit" href={tradingCompetitionConfig[token].swapUrl} color="secondary" bold>
           {t('Swap Now')}
         </Link>

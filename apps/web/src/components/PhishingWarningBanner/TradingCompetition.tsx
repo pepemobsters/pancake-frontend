@@ -44,7 +44,7 @@ export const TradingCompetition: React.FC<{ token: 'aitech' | 'bfg' | 'apt' | 'v
       <Text bold as="span" color="#FFFFFF" fontSize={['12px', '12px', '14px']}>
         {t('Swap %token% to win a share of', { token })}
       </Text>
-      <Text bold as="span" color="#FCC631" fontSize={['12px', '12px', '14px']}>
+      <Text bold as="span" color="#FCC631" ml="3px" fontSize={['12px', '12px', '14px']}>
         ${tradingCompetitionConfig[token].reward}
       </Text>
       <Text bold as="span" color="#FFFFFF" fontSize={['12px', '12px', '14px']}>
