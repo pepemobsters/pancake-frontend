@@ -1,5 +1,11 @@
 # @pancakeswap/tokens
 
+## 0.6.30
+
+### Patch Changes
+
+- 77db844: Update token symbol
+
 ## 0.6.29
 
 ### Patch Changes
